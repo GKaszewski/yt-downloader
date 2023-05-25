@@ -66,13 +66,20 @@ app.get('/api/download', (req, res) => {
         return ytdl(url, {
             quality: quality,
             filter: 'videoandaudio'
-        }).pipe(res);
+        })
+            .on('error', () => {
+                res.status(500);
+            }).pipe(res);
     } else if (type === 'audio') {
         res.header('Content-Disposition', 'attachment; filename="audio.mp3"');
         return ytdl(url, {
             quality: quality,
             filter: 'audioonly'
-        }).pipe(res);
+        })
+            .on('error', () => {
+                res.status(500);
+            })
+            .pipe(res);
     }
 })
 
