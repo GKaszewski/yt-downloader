@@ -68,7 +68,7 @@ app.get('/api/download', (req, res) => {
             filter: 'videoandaudio'
         })
             .on('error', () => {
-                res.status(500);
+                res.status(500).send('Error');
             }).pipe(res);
     } else if (type === 'audio') {
         res.header('Content-Disposition', 'attachment; filename="audio.mp3"');
@@ -77,7 +77,7 @@ app.get('/api/download', (req, res) => {
             filter: 'audioonly'
         })
             .on('error', () => {
-                res.status(500);
+                res.status(500).send('Error');
             })
             .pipe(res);
     }
