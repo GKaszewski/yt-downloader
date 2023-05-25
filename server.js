@@ -40,7 +40,7 @@ app.get('/api/download', (req, res) => {
     const type = req.query.type;
     let quality = req.query.quality || 'highestvideo';
     //134 - 480p, 136 - 720p, 137 - 1080p, 140 - 128kbps
-    const qualities = ['highestvideo', 'highestaudio', 18]
+    const qualities = ['highestvideo', 'highestaudio', '18']
     if (type === 'audio' && quality && quality === 'highestvideo') {
         quality = 'highestaudio';
     }
