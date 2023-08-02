@@ -14,8 +14,9 @@ export const downloadVideo = async (videoUrl: string, type: string, quality: str
     const url = `${BASE_URL}/api/download?url=${videoUrl}&type=${type}&quality=${_quality}`;
     const res = await fetch(url);
     if (!res.ok) throw new Error("Error downloading video");
+    const uuid = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
-    const fileName= type === "video" ? "video.mp4" : "audio.mp3";
+    const fileName= type === "video" ? `video-${uuid}.mp4` : `audio-${uuid}.mp3`;
     const blobType = type === "video" ? "video/mp4" : "audio/mp3";
 
     const blob = await res.blob();
