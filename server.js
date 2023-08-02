@@ -10,7 +10,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const limiter = rateLimit({
-    windowMs: 1 * 60 * 1000, // 1 minute
+    windowMs: 60 * 1000, // 1 minute
     max: 5, // 5 requests
     standardHeaders: true,
     legacyHeaders: false
@@ -61,8 +61,10 @@ app.get('/api/download', (req, res) => {
         return res.status(400).send('Invalid type parameter');
     }
 
+    const uuid = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
     if (type === 'video') {
-        res.header('Content-Disposition', 'attachment; filename="video.mp4"');
+        res.header('Content-Disposition', `attachment; filename="video-${uuid}.mp4"`);
         return ytdl(url, {
             quality: quality,
             filter: 'videoandaudio'
@@ -71,7 +73,7 @@ app.get('/api/download', (req, res) => {
                 res.status(500).send('Error');
             }).pipe(res);
     } else if (type === 'audio') {
-        res.header('Content-Disposition', 'attachment; filename="audio.mp3"');
+        res.header('Content-Disposition', `attachment; filename="audio-${uuid}.mp3"`);
         return ytdl(url, {
             quality: quality,
             filter: 'audioonly'
